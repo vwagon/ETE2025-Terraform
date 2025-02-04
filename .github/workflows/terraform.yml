@@ -1,0 +1,49 @@
+name: Terraform CI/CD ETE2025
+
+on:
+  push:
+    branches:
+      - main  
+  pull_request:
+    branches:
+      - main  
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recup du repository
+        uses: actions/checkout@v4
+
+
+      - name: Installation Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: '1.10.4'
+
+
+      - name: AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: 'eu-west-3'  # La région AWS où tu déploies
+
+      # 4. Initialisation de Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # 5. Validation du plan Terraform (optionnel mais recommandé)
+      - name: Terraform Validate
+        run: terraform validate
+
+      # 6. Exécution du plan Terraform
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # 7. Application du plan Terraform (Automatique uniquement si le plan est validé)
+      - name: Terraform Apply
+        if: github.event_name == 'push'  # Appliquer uniquement sur un push, pas sur une PR
+        run: terraform apply -auto-approve tfplan
+

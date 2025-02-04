@@ -18,7 +18,7 @@ jobs:
 
 
       - name: Installation Terraform
-        uses: hashicorp/setup-terraform@v4
+        uses: hashicorp/setup-terraform@v3.1.2
         with:
           terraform_version: '1.10.4'
 

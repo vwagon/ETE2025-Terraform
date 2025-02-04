@@ -46,9 +46,9 @@ jobs:
           run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-          if: github.event.inputs.action == 'apply'
-          run: terraform apply -auto-approve tfplan
+        if: github.event.inputs.action == 'apply'
+        run: terraform apply -auto-approve tfplan
 
       - name: Terraform Destroy
-          if: github.event.inputs.action == 'destroy'
-          run: terraform destroy -auto-approve
+        if: github.event.inputs.action == 'destroy'
+        run: terraform destroy -auto-approve

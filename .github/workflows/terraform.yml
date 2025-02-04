@@ -37,19 +37,18 @@ jobs:
           echo "dbusername = \"${{ secrets.DB_USERNAME }}\"" >> terraform.tfvars
 
       - name: Terraform Init
-        run: terraform init
+          run: terraform init
 
       - name: Terraform Validate
-        run: terraform validate
+          run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+          run: terraform plan -out=tfplan
 
-      # 7. Application du plan Terraform (Automatique uniquement si le plan est validé)
       - name: Terraform Apply
-        if: github.event_name == 'push'  # Appliquer uniquement sur un push, pas sur une PR
-        run: terraform apply -auto-approve tfplan
+          if: github.event.inputs.action == 'apply'
+          run: terraform apply -auto-approve tfplan
 
       - name: Terraform Destroy
-        if: github.event_name == 'workflow_dispatch'  # Exécute uniquement en mode manuel
-        run: terraform destroy -auto-approve
+          if: github.event.inputs.action == 'destroy'
+          run: terraform destroy -auto-approve

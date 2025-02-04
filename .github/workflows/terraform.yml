@@ -31,11 +31,14 @@ jobs:
           aws-region: 'eu-west-3'
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
 
-      # 4. Initialisation de Terraform
+      - name: Create terraform.tfvars
+        run: |
+          echo "dbpassword = \"${{ secrets.DB_PASSWORD }}\"" > terraform.tfvars
+          echo "dbusername = \"${{ secrets.DB_USERNAME }}\"" >> terraform.tfvars
+
       - name: Terraform Init
         run: terraform init
 
-      # 5. Validation du plan Terraform (optionnel mais recommandé)
       - name: Terraform Validate
         run: terraform validate
 

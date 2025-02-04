@@ -1,0 +1,17 @@
+# Ignorer les fichiers Terraform sensibles
+terraform.tfstate
+terraform.tfstate.*
+.terraform/
+
+# Ignorer les variables sensibles
+terraform.tfvars
+*.tfvars
+
+# Ignorer les clés SSH privées (sécurité)
+ecfkey
+ecfkey.pub
+
+# Ignorer les fichiers de logs et backups
+*.log
+*.backup
+.DS_Store  # (MacOS)

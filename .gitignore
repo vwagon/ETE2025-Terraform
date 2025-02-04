@@ -5,7 +5,6 @@ terraform.tfstate.*
 
 # Ignorer les variables sensibles
 terraform.tfvars
-*.tfvars
 
 # Ignorer les clés SSH privées (sécurité)
 ecfkey

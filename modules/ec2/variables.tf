@@ -1,13 +1,3 @@
-variable "map_list" {
-    type = map(list(any))
-        #type = string
-        #from_port = string
-        #to_port = string
-        #protocol = string
-        #cidr_block = string
-    #)))  
-}
-
 variable "AWS_REGION" {
     default = "eu-west-3"
     description = "Région de notre instance ec2"
@@ -25,5 +15,15 @@ variable "AWS_INSTANCE_TYPE" {
 }
 
 variable "security_group_id" {
+    description = "The security group ID for the RDS instance"
+    type = string
+}
+
+variable "subnet_id" {
+    type = string
+}
+
+variable "vpc_id" {
+    description = "VPC ID"
     type = string
 }

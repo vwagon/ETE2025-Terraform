@@ -14,16 +14,6 @@ variable "AWS_INSTANCE_TYPE" {
     default = "t2.micro"
 }
 
-variable "map_list" {
-    type = map(list(any))
-        #type = string
-        #from_port = string
-        #to_port = string
-        #protocol = string
-        #cidr_block = string
-    #)))  
-}
-
 variable "dbpassword" {
     type = string
 }

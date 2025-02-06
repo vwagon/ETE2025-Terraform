@@ -11,3 +11,12 @@ variable "dbusername" {
     type = string
 }
 
+variable "vpc_id" {
+    description = "VPC ID"
+    type = string
+}
+
+variable "subnet_ids" {
+  description = "Liste des subnets privés pour le RDS"
+  type        = list(string)
+}

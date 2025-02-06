@@ -1,16 +1,48 @@
-resource "aws_security_group" "ecf_sg" {
-    name = "ecf_sg"
-    description = "Allow TLS inbound traffic and all outbound traffic"
+resource "aws_security_group" "ec2_sg" {
+    name = "ec2_sg"
+    vpc_id = var.vpc_id
+    description = "Autorise ssh et le traffic entrant"
     tags = {
-        Name = "ecf_sg"
+        Name = "ec2_sg"
+    }
+    ingress {
+        from_port   = 22
+        to_port     = 22
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        from_port   = 3306
+        to_port     = 3306
+        protocol    = "tcp"
+        cidr_blocks = ["10.0.0.0/16"]
+    }
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
-resource "aws_security_group_rule" "ecf_sg_rule" {
-    for_each = var.map_list
-    type = each.value[0]
-    from_port = each.value[1]
-    to_port = each.value[2]
-    protocol = each.value[3]
-    cidr_blocks = [ each.value[4] ]
-    security_group_id = aws_security_group.ecf_sg.id
+
+resource "aws_security_group" "rds_sg" {
+    name = "rds_sg"
+    vpc_id = var.vpc_id
+    description = "Autorise les connexions MySQL depuis EC2"
+    tags = {
+      Name = "rds_sg"
+    }
+    ingress {
+        from_port   = 3306
+        to_port     = 3306
+        protocol    = "tcp"
+        security_groups = [aws_security_group.ec2_sg.id]
+    }
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["10.0.0.0/16"]
+    }
 }

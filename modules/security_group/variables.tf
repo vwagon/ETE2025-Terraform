@@ -1,3 +1,4 @@
-variable "map_list" {
-  type = map(list(any))
+variable "vpc_id" {
+  description = "VPC ID"
+  type = string
 }

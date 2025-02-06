@@ -22,5 +22,5 @@ resource "aws_instance" "ec2_java" {
 
 resource "aws_key_pair" "ecfkey" {
   key_name   = "ecfkey"
-  public_key = file("/Users/valentinwagon/DevOps/Studi/ECF/Infra/ecfkey.pub")
+  public_key = file("ecfkey.pub")
 }

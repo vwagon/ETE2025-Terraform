@@ -13,6 +13,7 @@ resource "aws_instance" "ec2_java" {
         sudo yum update -y
         sudo amazon-linux-extras install epel -y 
 		    sudo yum install -y java mariadb105 git maven curl docker
+        docker --version
         sudo java -version
         sudo usermod -aG docker ec2-user
         systemctl enable --now docker

@@ -35,20 +35,19 @@ jobs:
         run: |
           echo "dbpassword = \"${{ secrets.DB_PASSWORD }}\"" > terraform.tfvars
           echo "dbusername = \"${{ secrets.DB_USERNAME }}\"" >> terraform.tfvars
-
+          
+      - name: Create EC2 Key Pair
+        run: |
+          echo "${{ secrets.ECF_KEY_PUBLIC }}" > ecfkey.pub
       - name: Terraform Init
-          run: terraform init
+        run: terraform init
 
       - name: Terraform Validate
-          run: terraform validate
+        run: terraform validate
 
       - name: Terraform Plan
-          run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        if: github.event.inputs.action == 'apply'
+        if: success()
         run: terraform apply -auto-approve tfplan
-
-      - name: Terraform Destroy
-        if: github.event.inputs.action == 'destroy'
-        run: terraform destroy -auto-approve

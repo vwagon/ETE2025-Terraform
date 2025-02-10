@@ -9,13 +9,11 @@ resource "aws_instance" "ec2_java" {
     }
     user_data = <<-EOF
 		#!/bin/bash
+        set -e
         sudo yum update -y
         sudo amazon-linux-extras install epel -y 
-		    sudo yum install -y java
-        sudo yum install -y mariadb105-server-utils
+		    sudo yum install -y java mariadb105 git maven curl
         sudo java -version
-        sudo yum install -y tomcat8
-        sudo service tomcat8 start
 	EOF
 
 }

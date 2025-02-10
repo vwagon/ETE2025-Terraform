@@ -22,6 +22,7 @@ resource "aws_instance" "ec2_java" {
         sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
         docker-compose version
+        docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
 	EOF
 
 }

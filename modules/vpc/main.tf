@@ -26,11 +26,10 @@ resource "aws_subnet" "private_subnet" {
 }
 
 #Afin de permettre a aws_db_subnet_group d'avoir deux subnets prives donc deux AZ uniquement
-
 resource "aws_subnet" "private_subnet_2" {
   vpc_id            = aws_vpc.ecfvpc.id
-  cidr_block        = "10.0.3.0/24"  # Nouvelle plage CIDR
-  availability_zone = "eu-west-3b"  # Différente AZ
+  cidr_block        = "10.0.3.0/24" 
+  availability_zone = "eu-west-3b"
   tags = {
     Name = "ecfvpc-private-subnet2"
   }

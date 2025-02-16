@@ -1,7 +1,7 @@
 resource "aws_vpc" "ecfvpc" {
     cidr_block = "10.0.0.0/16"
     tags = {
-      name = "ecfvpc"
+      Name = "ecfvpc"
     }
   
 }
@@ -10,6 +10,9 @@ resource "aws_subnet" "public_subnet" {
     vpc_id = aws_vpc.ecfvpc.id
     cidr_block = "10.0.1.0/24"
     map_public_ip_on_launch = true
+    tags = {
+      Name = "ecfvpc-public-subnet"
+    }
   
 }
 
@@ -17,6 +20,9 @@ resource "aws_subnet" "private_subnet" {
     vpc_id = aws_vpc.ecfvpc.id
     cidr_block = "10.0.2.0/24"
     availability_zone = "eu-west-3a"
+    tags = {
+      Name = "ecfvpc-private-subnet"
+    }
 }
 
 #Afin de permettre a aws_db_subnet_group d'avoir deux subnets prives donc deux AZ uniquement
@@ -25,6 +31,9 @@ resource "aws_subnet" "private_subnet_2" {
   vpc_id            = aws_vpc.ecfvpc.id
   cidr_block        = "10.0.3.0/24"  # Nouvelle plage CIDR
   availability_zone = "eu-west-3b"  # Différente AZ
+  tags = {
+    Name = "ecfvpc-private-subnet2"
+  }
 }
 
 resource "aws_internet_gateway" "ecfgateway" {

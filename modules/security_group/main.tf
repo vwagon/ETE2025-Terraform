@@ -23,7 +23,7 @@ resource "aws_security_group" "ec2_sg" {
         from_port   = 3306
         to_port     = 3306
         protocol    = "tcp"
-        security_groups = [aws_security_group.rds_sg.id]
+        security_groups = [aws_security_group.rds_sg.id] 
     }
     ingress {
         description = "Grafana"
@@ -37,21 +37,21 @@ resource "aws_security_group" "ec2_sg" {
         from_port   = 9090
         to_port     = 9090
         protocol    = "tcp"
-        cidr_blocks = [local.private_subnet_cidr]
+        security_groups = [aws_security_group.ec2_sg.id] 
     }
     ingress {
         description = "Loki"
         from_port   = 3100
         to_port     = 3100
         protocol    = "tcp"
-        cidr_blocks = [local.private_subnet_cidr]
+        security_groups = [aws_security_group.ec2_sg.id] 
     }
     ingress {
         description = "Promtail"
         from_port   = 9080
         to_port     = 9080
         protocol    = "tcp"
-        cidr_blocks = [local.private_subnet_cidr]
+        security_groups = [aws_security_group.ec2_sg.id]
     }
     egress {
         from_port   = 0
@@ -79,6 +79,6 @@ resource "aws_security_group" "rds_sg" {
         from_port   = 0
         to_port     = 0
         protocol    = "-1"
-        cidr_blocks = ["10.0.0.0/16"]
+        cidr_blocks = [local.private_subnet_cidr]
     }
 }

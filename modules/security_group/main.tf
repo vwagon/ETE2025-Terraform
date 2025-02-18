@@ -30,21 +30,21 @@ resource "aws_security_group" "ec2_sg" {
         from_port   = 9090
         to_port     = 9090
         protocol    = "tcp"
-        security_groups = [aws_security_group.ec2_sg.id] 
+        cidr_blocks = [local.private_subnet_cidr]
     }
     ingress {
         description = "Loki"
         from_port   = 3100
         to_port     = 3100
         protocol    = "tcp"
-        security_groups = [aws_security_group.ec2_sg.id] 
+        cidr_blocks = [local.private_subnet_cidr]
     }
     ingress {
         description = "Promtail"
         from_port   = 9080
         to_port     = 9080
         protocol    = "tcp"
-        security_groups = [aws_security_group.ec2_sg.id]
+        cidr_blocks = [local.private_subnet_cidr]
     }
     egress {
         from_port   = 0

@@ -19,13 +19,6 @@ resource "aws_security_group" "ec2_sg" {
         cidr_blocks = local.admin_ip
     }
     ingress {
-        description = "MySQL to RDS"
-        from_port   = 3306
-        to_port     = 3306
-        protocol    = "tcp"
-        security_groups = [aws_security_group.rds_sg.id] 
-    }
-    ingress {
         description = "Grafana"
         from_port   = 3000
         to_port     = 3000
